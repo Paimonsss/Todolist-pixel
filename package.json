@@ -1,0 +1,22 @@
+{
+  "name": "tugas-quest",
+  "version": "1.0.0",
+  "description": "Todolist bertema pixel yang sinkron dengan kalender BRONE UB dan mengirim push notification.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node --test",
+    "icons": "node scripts/make-icons.js"
+  },
+  "dependencies": {
+    "@fontsource/press-start-2p": "^5.3.0",
+    "@fontsource/vt323": "^5.3.0",
+    "express": "^4.21.2",
+    "web-push": "^3.6.7"
+  }
+}

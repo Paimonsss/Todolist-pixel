@@ -1,0 +1,5 @@
+node_modules/
+# Berisi link kalender pribadi, kunci push, dan hash password
+data/
+.env
+.env.*

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tugas Quest</title>
+  <meta name="theme-color" content="#1d1a4a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Tugas Quest">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon-96.png">
+  <link rel="apple-touch-icon" href="/icons/icon-180.png">
+  <link rel="preload" href="/fonts/vt323-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main id="auth" class="auth" hidden>
+    <img src="/icons/icon-192.png" alt="" width="96" height="96" class="logo">
+    <h1>Tugas Quest</h1>
+    <p id="authHint"></p>
+    <form id="authForm" class="panel stack">
+      <label for="authPassword">Password aplikasi</label>
+      <input id="authPassword" type="password" minlength="8" maxlength="128" required>
+      <p class="note">Ini bukan password akun UB. Jangan pakai password yang sama.</p>
+      <p id="authError" class="error" role="alert" hidden></p>
+      <button class="px-btn primary" data-sfx="GO!" id="authSubmit">Masuk</button>
+    </form>
+  </main>
+
+  <div id="app" class="shell" hidden>
+    <header class="top">
+      <div>
+        <h1>Tugas Quest</h1>
+        <p id="syncLine" class="sync"></p>
+      </div>
+      <button class="px-btn icon" id="openSettings" aria-label="Pengaturan" title="Pengaturan">⚙</button>
+    </header>
+
+    <section class="xp panel" aria-label="Progres tugas">
+      <div class="xp-head"><strong id="xpLabel">0 / 0 selesai</strong><span id="urgentLabel"></span></div>
+      <div class="xp-bar"><div id="xpFill"></div></div>
+    </section>
+
+    <button class="banner" id="setupBanner" hidden></button>
+
+    <nav class="tabs" aria-label="Filter tugas">
+      <button class="tab active" data-filter="active">Aktif</button>
+      <button class="tab" data-filter="done">Selesai</button>
+    </nav>
+
+    <ul id="taskList" class="tasks"></ul>
+    <div id="empty" class="empty" hidden></div>
+
+    <button class="px-btn primary fab" id="openAdd" data-sfx="NEW!">+ Tugas</button>
+  </div>
+
+  <dialog id="addDialog" class="panel">
+    <form id="addForm" class="stack">
+      <h2>Tugas baru</h2>
+      <label for="addTitle">Nama tugas</label>
+      <input id="addTitle" maxlength="200" required>
+      <label for="addDue">Tenggat</label>
+      <input id="addDue" type="datetime-local" required>
+      <p id="addError" class="error" role="alert" hidden></p>
+      <div class="row">
+        <button type="button" class="px-btn" data-close>Batal</button>
+        <button class="px-btn primary" data-sfx="OK!">Simpan</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog" class="panel">
+    <div class="stack">
+      <div class="row between"><h2>Pengaturan</h2><button class="px-btn icon small" data-close aria-label="Tutup">✕</button></div>
+
+      <section class="stack">
+        <h3>Hubungkan BRONE</h3>
+        <p id="broneStatus" class="note"></p>
+        <div id="broneSetup" class="stack">
+          <ol class="steps">
+            <li>Buka halaman kalender dan login dengan SSO UB.</li>
+            <li>Pilih <b>All events</b> dan <b>Recent and next 60 days</b>.</li>
+            <li>Tekan <b>Get calendar URL</b>, salin link-nya, lalu tempel di bawah.</li>
+          </ol>
+          <a class="px-btn" href="https://brone.ub.ac.id/calendar/export.php" target="_blank" rel="noopener noreferrer">Buka BRONE ↗</a>
+          <form id="broneForm" class="stack">
+            <label for="broneUrl">Link kalender</label>
+            <input id="broneUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://brone.ub.ac.id/calendar/export_execute.php?..." required>
+            <p id="broneError" class="error" role="alert" hidden></p>
+            <button class="px-btn primary" id="broneSubmit" data-sfx="LINK!">Hubungkan</button>
+          </form>
+        </div>
+        <div id="broneActions" class="row" hidden>
+          <button class="px-btn" id="syncNow" data-sfx="SYNC!">Sinkron</button>
+          <button class="px-btn danger" id="broneOff">Putuskan</button>
+        </div>
+      </section>
+
+      <section class="stack">
+        <h3>Notifikasi HP</h3>
+        <p id="pushStatus" class="note"></p>
+        <div class="row">
+          <button class="px-btn primary" id="pushToggle" data-sfx="DING!">Aktifkan</button>
+          <button class="px-btn" id="pushTest" hidden>Tes notif</button>
+        </div>
+        <p class="note">Pengingat dikirim saat tugas baru masuk, lalu H-3, H-1, 6 jam, dan 1 jam sebelum tenggat.</p>
+      </section>
+
+      <button class="px-btn" id="logout">Keluar</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+  <div id="fx" aria-hidden="true"></div>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
